@@ -1,0 +1,6 @@
+[submodule "STM32MP1_AWS-IoT-Greengrass-nucleus-lite"]
+	path = STM32MP1_AWS-IoT-Greengrass-nucleus-lite
+	url = https://github.com/stm32-hotspot/STM32MP1_AWS-IoT-Greengrass-nucleus-lite.git
+[submodule "GreenGrass_Lite_BLE_Gateway_Proteus"]
+	path = GreenGrass_Lite_BLE_Gateway_Proteus
+	url = https://github.com/stm32-hotspot/GreenGrass_Lite_BLE_Gateway_Proteus.git
