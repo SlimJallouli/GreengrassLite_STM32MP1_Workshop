@@ -76,7 +76,7 @@ Make sure you install or have access to the following:
 You will need to clone the following repositories as submodules with this command:
 
 ```bash
-git clone --recurse-submodules https://github.com/stm32-hotpsot/GreengrassLite_STM32MP1_Workshop.git
+git clone https://github.com/stm32-hotspot/GreengrassLite_STM32MP1_Workshop.git --recurse-submodules
 ```
 
 > If you've already cloned without submodules, you can initialize them manually with:
