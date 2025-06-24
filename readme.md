@@ -123,73 +123,116 @@ This section guides you through installing the necessary drivers and flashing th
 > For background information, diagrams, and additional support, refer to the official [STM32MP135x-DK Boot Image Setup Guide](https://wiki.st.com/stm32mpu/wiki/Getting_started/STM32MP1_boards/STM32MP135x-DK/Let%27s_start/Populate_the_target_and_boot_the_image).
 
 
-#### Step 1: Install STM32CubeProgrammer Dependencies
+<details>
+  <summary>Option 1: Flash SD Card with Script (Linux Only)</summary>
 
-##### On Linux
+  This section guides you through flashing the SD card using a provided script in a Linux environment.
 
-Install required USB packages and copy udev rules:
+  1.  **Copy the Script:** The necessary script is included in the repository. Copy the `flash_sdcard_from_raw.sh` script to the root scripts directory of your OpenSTLinux package.
 
-```bash
-sudo apt-get install libusb-1.0-0
-cd <STM32CubeProgrammer_Install_Path>/Drivers/rules
-sudo cp *.* /etc/udev/rules.d/
-```
+      For example, if your OpenSTLinux package root is `~/openstlinux-6.1-yocto-mp1-v23.06.00`, and the script is located elsewhere in your cloned repo, you would copy it there.
 
-This ensures your PC can detect and communicate with the board over USB.
+      * **Locate the script:** Find the script in your cloned repository. (e.g., `path/to/your/repo/GreengrassLite_STM32MP1_Workshop/flash_sdcard_from_raw.sh`)
+      * **Copy it:**
+          ```bash
+          cp path/to/your/repo/GreengrassLite_STM32MP1_Workshop/flash_sdcard_from_raw.sh ~/openstlinux-6.1-yocto-mp1-v23.06.00/images/stm32mp1/scripts/flash_sdcard_from_raw.sh
+          ```
 
-##### On Windows
 
-Run the DFU driver installer:
+  2.  **Navigate to the scripts directory:** 
+      ```bash
+      cd ~/openstlinux-6.1-yocto-mp1-v23.06.00/images/stm32mp1/scripts
+      ```
 
-```powershell
-cd <STM32CubeProgrammer_Install_Path>\Drivers\DFU_Driver\
-.\STM32Bootloader.bat
-```
+  3.  **Make Executable (if necessary):** Ensure the script is executable.
+      
+      ```bash
+      chmod +x flash_sdcard.sh
+      ```
 
-If you encounter issues, refer to the troubleshooting guide:
-[DFU Driver Installation Troubleshooting (ST Wiki)](https://wiki.st.com/stm32mpu/wiki/STM32CubeProgrammer#How_to_proceed_when_the_DFU_driver_installation_fails_on_Windows_host_PC)
+  4.  **Run the Script:** Execute the script from the root directory of your OpenSTLinux package:
 
-#### Step 2: Flash the Image
+      ```bash
+      ./flash_sdcard.sh
+      ```
 
-1. **Set boot switches** to DFU mode:
-   `1-Open 2-Open 3-Open 4-Open`
-   
-   ![DFU Boot Switches](./assets/dfu_boot.jpg)
+  5.  **Follow Prompts:** The script will guide you through identifying your SD card and confirming the write operation. **Be extremely careful to select the correct device, as this process will erase all data on the chosen drive.**
+</details>
 
-2. **Connect power** using a USB-C cable to the `PWR CN12` port.
-   
-   ![Power Cable](./assets/pwr.jpg)
+<details>
 
-3. **Connect data** using a USB-A to USB-C cable from your PC to the `CN7/USB_OTG` port.
-   
-   ![USB Cable](./assets/usb.jpg)
+   <summary>Option 2: Flash Starter Package with STM32CubeProgrammer</summary>
 
-4. Launch **STM32CubeProgrammer**.
+   #### Step 1: Install STM32CubeProgrammer Dependencies
 
-5. In the GUI, select **USB** mode and connect to the board.
-   
-   ![Select USB](./assets/800px-STM32CubePro_GUI_210_SelectUSB.png)
+   ##### On Linux
 
-6. Click **Open File** and select:
-   `FlashLayout_sdcard_stm32mp135x-dk-optee.tsv`
-   
-   ![Open File](./assets/800px-STM32CubePro_GUI_210.png)
+   Install required USB packages and copy udev rules:
 
-7. Set the **Binaries Path** to:
-   `$[Starter_Pack_Path]/images/stm32mp1`
-   
-   ![Binaries Path](./assets/800px-STM32CubePro_GUI_210_MP13DK_FileSelectedOptee.png)
+   ```bash
+   sudo apt-get install libusb-1.0-0
+   cd <STM32CubeProgrammer_Install_Path>/Drivers/rules
+   sudo cp *.* /etc/udev/rules.d/
+   ```
 
-8. Click **Download** to begin flashing.
+   This ensures your PC can detect and communicate with the board over USB.
 
-9. After flashing completes:
+   ##### On Windows
 
-   * **Update boot switches** to boot from SD card:
-     `1-Closed 2-Open 3-Closed 4-Open`
-     
-     ![SD Boot Switches](./assets/sd_boot.jpg)
+   Run the DFU driver installer:
 
-   * **Power-cycle** the board.
+   ```powershell
+   cd <STM32CubeProgrammer_Install_Path>\Drivers\DFU_Driver\
+   .\STM32Bootloader.bat
+   ```
+
+   If you encounter issues, refer to the troubleshooting guide:
+   [DFU Driver Installation Troubleshooting (ST Wiki)](https://wiki.st.com/stm32mpu/wiki/STM32CubeProgrammer#How_to_proceed_when_the_DFU_driver_installation_fails_on_Windows_host_PC)
+
+   #### Step 2: Flash the Image
+
+
+
+   1. **Set boot switches** to DFU mode:
+      `1-Open 2-Open 3-Open 4-Open`
+      
+      ![DFU Boot Switches](./assets/dfu_boot.jpg)
+
+   2. **Connect power** using a USB-C cable to the `PWR CN12` port.
+      
+      ![Power Cable](./assets/pwr.jpg)
+
+   3. **Connect data** using a USB-A to USB-C cable from your PC to the `CN7/USB_OTG` port.
+      
+      ![USB Cable](./assets/usb.jpg)
+
+   4. Launch **STM32CubeProgrammer**.
+
+   5. In the GUI, select **USB** mode and connect to the board.
+      
+      ![Select USB](./assets/800px-STM32CubePro_GUI_210_SelectUSB.png)
+
+   6. Click **Open File** and select:
+      `FlashLayout_sdcard_stm32mp135x-dk-optee.tsv`
+      
+      ![Open File](./assets/800px-STM32CubePro_GUI_210.png)
+
+   7. Set the **Binaries Path** to:
+      `$[Starter_Pack_Path]/images/stm32mp1`
+      
+      ![Binaries Path](./assets/800px-STM32CubePro_GUI_210_MP13DK_FileSelectedOptee.png)
+
+   8. Click **Download** to begin flashing.
+
+   9. After flashing completes:
+
+      * **Update boot switches** to boot from SD card:
+      `1-Closed 2-Open 3-Closed 4-Open`
+      
+      ![SD Boot Switches](./assets/sd_boot.jpg)
+
+      * **Power-cycle** the board.
+</details>
 
 ---
 
